@@ -125,7 +125,10 @@ class P100():
 		self.tpLinkCipher = self.decode_handshake_key(encryptedKey)
 
 		try:
-			self.cookie = r.headers["Set-Cookie"][:-13]
+			# PROBLEM - login not working with firmware version 1.0.16 Build 220624 Rel.
+			# FIX - https://github.com/fishbigger/TapoP100/issues/76
+			# self.cookie = r.headers["Set-Cookie"][:-13] - original
+            		self.cookie = r.headers["Set-Cookie"][:-14]  
 
 		except:
 			errorCode = r.json()["error_code"]
